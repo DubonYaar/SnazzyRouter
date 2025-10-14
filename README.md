@@ -11,11 +11,12 @@
   <img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" />
 </p>
 
-
-<p align="center">
  
-  A modern, type-safe SwiftUI router with a clean declarative API
+<p align="center">
+  <b>A modern, type-safe router for SwiftUI with a clean declarative API</b><br>
+ 
 </p>
+ 
 
 ## 📦 Installation
 
