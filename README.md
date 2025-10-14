@@ -13,8 +13,8 @@
 
 
 <p align="center">
-  <b>Navigation so smooth, it's got style</b><br>
-  A modern, type-safe router for SwiftUI with a clean declarative API
+ 
+  A modern, type-safe SwiftUI router with a clean declarative API
 </p>
 
 ## 📦 Installation
