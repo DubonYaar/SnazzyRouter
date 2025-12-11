@@ -13,10 +13,10 @@
 
  
 <p align="center">
-  <b>A modern, type-safe router for SwiftUI with a clean declarative API</b><br>
- 
+  <b>A modern, type-safe Swift router for SwiftUI navigation with a clean declarative API.</b><br>
 </p>
- 
+
+SnazzyRouter is a lightweight, type-safe **Swift router for SwiftUI** that makes navigation simple, predictable, and fully declarative. It supports stacking navigation, deep linking, modal presentations, alerts, confirmation dialogs, and programmatic routing — all powered by a clean, Swifty API designed specifically for SwiftUI apps.
 
 ## 📦 Installation
 
@@ -36,7 +36,7 @@ dependencies: [
 ]
 ```
 
-## 🚀 Quick Start
+## 🚀 Quick Start — SwiftUI Routing
 
 ### 1. Define Your Routes
 
@@ -122,7 +122,7 @@ struct ProfileView: View {
 }
 ```
 
-## 📱 Modal Presentations
+## 📱 SwiftUI Modal Presentations (Sheet, FullScreenCover, Popover)
 
 SnazzyRouter supports all SwiftUI modal types:
 
@@ -163,7 +163,7 @@ struct HomeView: View {
 }
 ```
 
-## 🔔 Alerts & Confirmation Dialogs
+## 🔔 SwiftUI Alerts & Confirmation Dialog Routing
 
 Built-in support for alerts and confirmation dialogs:
 
