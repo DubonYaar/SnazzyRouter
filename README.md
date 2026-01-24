@@ -1,10 +1,6 @@
 # SnazzyRouter ✨
 
 <p align="center">
-  <img src="Images/banner.jpg" alt="SnazzyRouter Banner" width="800">
-</p>
-
-<p align="center">
   <img src="https://img.shields.io/badge/Swift-5.9+-orange.svg" />
   <img src="https://img.shields.io/badge/iOS-17.0+-blue.svg" />
   <img src="https://img.shields.io/badge/SwiftUI-Compatible-brightgreen.svg" />
@@ -13,10 +9,10 @@
 
  
 <p align="center">
-  <b>A modern, type-safe Swift router for SwiftUI navigation with a clean declarative API.</b><br>
+  <b>A modern, type-safe router for SwiftUI with a clean declarative API</b><br>
+ 
 </p>
-
-SnazzyRouter is a lightweight, type-safe **Swift router for SwiftUI** that makes navigation simple, predictable, and fully declarative. It supports stacking navigation, deep linking, modal presentations, alerts, confirmation dialogs, and programmatic routing — all powered by a clean, Swifty API designed specifically for SwiftUI apps.
+ 
 
 ## 📦 Installation
 
@@ -36,7 +32,7 @@ dependencies: [
 ]
 ```
 
-## 🚀 Quick Start — SwiftUI Routing
+## 🚀 Quick Start
 
 ### 1. Define Your Routes
 
@@ -122,7 +118,7 @@ struct ProfileView: View {
 }
 ```
 
-## 📱 SwiftUI Modal Presentations (Sheet, FullScreenCover, Popover)
+## 📱 Modal Presentations
 
 SnazzyRouter supports all SwiftUI modal types:
 
@@ -163,7 +159,7 @@ struct HomeView: View {
 }
 ```
 
-## 🔔 SwiftUI Alerts & Confirmation Dialog Routing
+## 🔔 Alerts & Confirmation Dialogs
 
 Built-in support for alerts and confirmation dialogs:
 
@@ -211,6 +207,32 @@ struct SettingsView: View {
 }
 ```
 
+## 🔗 Programmatic Navigation
+
+Access the router state directly for complex navigation logic:
+
+```swift
+import SnazzyRouter
+import SwiftUI
+
+struct DeepLinkHandler: View {
+    @Environment(RouterState<AppRoute>.self) private var router
+    
+    var body: some View {
+        Color.clear
+            .onOpenURL { url in
+                handleDeepLink(url: url)
+            }
+    }
+    
+    private func handleDeepLink(url: URL) {
+        // Parse URL and navigate
+        router.popToRoot()
+        router.push(.profile(userId: "deep-link-user"))
+    }
+}
+```
+
 ## 🎯 Advanced Usage
 
 ### Custom Router State
@@ -231,43 +253,45 @@ var body: some View {
 }
 ```
 
-### Programmatic Navigation
-
-Access the router state directly for complex navigation logic:
-
-```swift
-
-import SnazzyRouter
-import SwiftUI
-
-class AppViewModel: ObservableObject {
-    let router = RouterState<AppRoute>()
-  
-    func handleDeepLink(url: URL) {
-        // Parse URL and navigate
-        router.popToRoot()
-        router.push(.profile(userId: "deep-link-user"))
-    }
-}
-```
-
 ## 📚 Documentation
 
 ### Core Types
 
-- **`Routable`** - Protocol for defining navigable destinations
+- **`Routable`** - Protocol for defining navigable destinations (requires `Hashable`, `Identifiable`, `Equatable`)
 - **`RouterState<D>`** - Observable state container for navigation
 - **`Router<D, Content>`** - Main view component for routing
 - **`RouterModalItem<D>`** - Modal presentation configuration
 - **`DialogAction`** - Action for confirmation dialogs
+- **`PopToMatch`** - Enum for specifying first or last occurrence (`.first`, `.last`)
 
 ### Navigation Methods
 
 - `push(_:)` - Navigate to a destination
 - `pop()` - Go back one level
 - `popToRoot()` - Return to root view
+- `popTo(_:match:)` - Pop to a specific destination in the stack
 - `showAlert(_:)` - Display an alert
 - `showConfirmationDialog(title:message:actions:)` - Show confirmation dialog
+
+### Pop to Specific Destination
+
+Use `popTo(_:match:)` to navigate back to a specific route in the navigation stack:
+
+```swift
+@Environment(RouterState<AppRoute>.self) var router
+
+// Pop to the last occurrence of .settings (default)
+router.popTo(.settings)
+
+// Pop to the first occurrence of .settings
+router.popTo(.settings, match: .first)
+```
+
+The `match` parameter accepts:
+- `.last` (default) - Pops to the most recent occurrence of the destination
+- `.first` - Pops to the earliest occurrence of the destination
+
+If the destination is not found in the navigation stack, no action is taken.
 
 ### Direct Path Access
 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public protocol Routable: Hashable, Identifiable {
+public protocol Routable: Hashable, Identifiable, Equatable {
     associatedtype DestinationView: View
 
     @MainActor
@@ -27,6 +27,11 @@ public extension Routable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+}
+
+public enum PopToMatch {
+    case first
+    case last
 }
 
 public struct RouterModalItem<D: Routable>: Identifiable, Equatable {
@@ -103,6 +108,24 @@ public class RouterState<D: Routable> {
 
     public func popToRoot() {
         path.removeAll()
+    }
+
+    /// Pops the navigation stack to a specific destination.
+    ///
+    /// - Parameters:
+    ///   - destination: The route to pop back to.
+    ///   - match: Whether to find the `.first` or `.last` occurrence of the destination (default: `.last`).
+    ///
+    /// If the destination is not found in the path, no action is taken.
+    public func popTo(_ destination: D, match: PopToMatch = .last) {
+        let index = switch match {
+        case .first: path.firstIndex(of: destination)
+        case .last: path.lastIndex(of: destination)
+        }
+
+        guard let index else { return }
+
+        path = Array(path[0 ... index])
     }
 
     // MARK: - Alert Methods
