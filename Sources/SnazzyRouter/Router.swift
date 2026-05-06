@@ -87,7 +87,9 @@ public class RouterState<D: Routable> {
 
     public var path: [D] = []
     public var fullScreenCover: RouterModalItem<D>?
+#if os(iOS)
     public var popover: RouterModalItem<D>?
+#endif
     public var sheet: RouterModalItem<D>?
 
     // Alert and dialog support
@@ -164,12 +166,14 @@ public struct RouterView<D: Routable, Content: View>: View {
                             item.dismiss?()
                         }
                 }
+#if os(iOS)
                 .popover(item: $provider.popover) { item in
                     item.destination.view
                         .onDisappear {
                             item.dismiss?()
                         }
                 }
+#endif
                 .fullScreenCover(item: $provider.fullScreenCover) { item in
                     item.destination.view
                         .onDisappear {
